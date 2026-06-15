@@ -9,7 +9,7 @@ Bring project setup to a clean 10/10 baseline with compact memory, safety rules,
 - Step: Create 10/10 baseline checkpoint
 - Status: WAITING_USER_TEST
 - Started: 2026-06-15
-- Notes: `context-engineering` is enabled for token discipline; other broad Addy skills remain disabled. Governance files are ready to commit and push.
+- Notes: `context-engineering` is enabled for token discipline; other broad Addy skills remain disabled. Governance files are committed and pushed to `origin/master`.
 
 ## Checklist
 
