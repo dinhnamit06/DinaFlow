@@ -110,3 +110,4 @@ Project workspace for step-by-step AI-assisted work with explicit user test gate
 - 2026-06-15: Decisions and known issues consolidated into `PROJECT_MAP.md`.
 - 2026-06-15: Selected Addy Osmani agent skills installed locally and registered disabled in Codex config.
 - 2026-06-15: `context-engineering` enabled in Codex config; other selected Addy skills remain disabled.
+- 2026-06-15: Governance baseline committed and pushed to `origin/master`.

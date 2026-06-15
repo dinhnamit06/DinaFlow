@@ -39,8 +39,8 @@ Bring project setup to a clean 10/10 baseline with compact memory, safety rules,
 - [x] Register selected skills in Codex config as disabled
 - [ ] User verifies selected Addy skills installation
 - [x] Enable only `context-engineering` in Codex config
-- [ ] Commit governance baseline
-- [ ] Push governance baseline to GitHub
+- [x] Commit governance baseline
+- [x] Push governance baseline to GitHub
 
 ## User Test Gate
 
@@ -64,7 +64,8 @@ Bring project setup to a clean 10/10 baseline with compact memory, safety rules,
 - 2026-06-15: Consolidated `DECISIONS.md` and `KNOWN_ISSUES.md` into `PROJECT_MAP.md`.
 - 2026-06-15: Installed five selected Addy Osmani agent skills and registered them disabled.
 - 2026-06-15: Enabled `context-engineering` only; kept other selected Addy skills disabled.
+- 2026-06-15: Committed and pushed governance baseline to `origin/master`.
 
 ## Blockers
 
-- Waiting for Git commit and push verification.
+- Waiting for user confirmation that the 10/10 baseline is acceptable.
