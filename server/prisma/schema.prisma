@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String      @id @default(uuid())
+  username        String      @unique
+  email           String      @unique
+  password_hash   String
+  gender          String      @default("male")
+  dopa_balance    Int         @default(230)
+  baseline_energy Int         @default(100)
+  flow_streak     Int         @default(0)
+  last_flow_time  DateTime?
+  partner_id      String?
+  activity_status String      @default("online")
+  room_id         String?
+  room_progress   Int         @default(0)
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  tasks                MicroTask[]
+  logs                 BioLog[]
+  rewards              Reward[]
+  room                 Room?        @relation(fields: [room_id], references: [id], onDelete: SetNull)
+  sent_requests        Friendship[] @relation("FriendRequestSender")
+  received_requests    Friendship[] @relation("FriendRequestReceiver")
+  sent_room_invites    RoomInvitation[] @relation("SentRoomInvites")
+  received_room_invites RoomInvitation[] @relation("ReceivedRoomInvites")
+  sent_partner_invites    PartnerInvitation[] @relation("SentPartnerInvites")
+  received_partner_invites PartnerInvitation[] @relation("ReceivedPartnerInvites")
+}
+
+model Friendship {
+  id         String   @id @default(uuid())
+  user_id    String
+  friend_id  String
+  status     String   @default("pending") // pending, accepted
+  created_at DateTime @default(now())
+
+  user   User @relation("FriendRequestSender", fields: [user_id], references: [id], onDelete: Cascade)
+  friend User @relation("FriendRequestReceiver", fields: [friend_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, friend_id])
+}
+
+model MicroTask {
+  id               String    @id @default(uuid())
+  user_id          String
+  title            String
+  description      String?
+  category         String?
+  duration_minutes Int
+  reward_dopa      Int
+  status           String    @default("pending")
+  completed_at     DateTime?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model BioLog {
+  id            String   @id @default(uuid())
+  user_id       String
+  hormone_type  String
+  activity_name String
+  points_earned Int
+  created_at    DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Reward {
+  id          String    @id @default(uuid())
+  user_id     String
+  reward_name String
+  icon_key    String?
+  dopa_cost   Int
+  is_redeemed Boolean   @default(false)
+  redeemed_at DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Room {
+  id               String   @id @default(uuid())
+  code             String   @unique
+  name             String
+  type             String   @default("group")
+  target_score     Int?
+  race_reward      String?
+  race_penalty     String?
+  race_status      String   @default("idle") // idle, pending, running
+  race_proposer_id String?
+  created_at       DateTime @default(now())
+  users            User[]
+  invitations  RoomInvitation[]
+}
+
+model RoomInvitation {
+  id         String   @id @default(uuid())
+  room_id    String
+  inviter_id String
+  invitee_id String
+  status     String   @default("pending") // pending, accepted, rejected
+  created_at DateTime @default(now())
+
+  room    Room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  inviter User @relation("SentRoomInvites", fields: [inviter_id], references: [id], onDelete: Cascade)
+  invitee User @relation("ReceivedRoomInvites", fields: [invitee_id], references: [id], onDelete: Cascade)
+
+  @@unique([room_id, invitee_id])
+}
+
+model PartnerInvitation {
+  id         String   @id @default(uuid())
+  inviter_id String
+  invitee_id String
+  status     String   @default("pending") // pending, accepted, rejected
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  inviter User @relation("SentPartnerInvites", fields: [inviter_id], references: [id], onDelete: Cascade)
+  invitee User @relation("ReceivedPartnerInvites", fields: [invitee_id], references: [id], onDelete: Cascade)
+}

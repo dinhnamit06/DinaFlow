@@ -1,0 +1,26 @@
+{
+  "name": "dinaflow-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "dev:all": "concurrently \"npm run dev\" \"cd server && npm run dev\"",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.7.0",
+    "concurrently": "^9.2.1",
+    "vite": "6.4.3"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  }
+}
